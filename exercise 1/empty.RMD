@@ -1,0 +1,23 @@
+---
+title: 'Exercise 0: RMD-files'
+author: "Sine Zambach"
+date: "September 10, 2021"
+output: 
+  html_document:
+    theme: sandstone
+    code_folding: show
+---
+
+
+This is a RMD-file (An R-MarkDown file) that you can use for your report and exercises. 
+
+# Header
+## Subheader
+### Subsubheader
+
+```{r init}
+
+```
+
+
+

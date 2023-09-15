@@ -1,0 +1,383 @@
+---
+title: 'Exercise 2: Data types, structures and conditions'
+author: "Sine Zambach"
+format: html
+editor: visual
+---
+
+## 
+
+# 1. Vectors
+
+## Creation and initialization
+
+-   Use `c()` to initialize different vectors of length 3 but with different modes; `numeric (double)`,
+
+`numeric (integer)`, `logical` and `character`.
+
+```{r}
+# Write your code here
+x <- c(2,4,6)
+y <- c("10","100", "CBS")
+z <- c(T,F,T,T)
+integ <- c(1L, 2L, 3L)
+
+# Check the datatype of your vectors
+class(x)
+class(y)
+class(z)
+class(integ)
+
+length(x)
+str(x)
+```
+
+-   Use `list()` to create a list. Then use `unlist()` to convert the list into a vector.
+
+```{r}
+
+# Write your code here
+mylist <- list(2,3, "CBS")
+class(mylist)
+typeof(mylist)
+
+nalist <- as.numeric(unlist(mylist))
+
+
+
+```
+
+## Inspection
+
+-   Examine the vectors by using `class()`, `length()` and `str()`, `typeof()`
+
+## Manipulation
+
+We retrieve values in a vector by declaring an index inside a single square bracket `[]` operator. In other words we tell R to give us the `i`'th element in the vector.
+
+-   For the below *sorted_vector*, get the first value `(i=1)`
+
+-   Replace the second element with e.g. 100
+
+```{r}
+
+sorted_vector <- seq(from = 1.5, to = 5, by = 0.5)  
+length(sorted_vector)
+
+# first value  
+sorted_vector[1]
+
+# replace second element with 100  
+sorted_vector[2] <- 100
+sorted_vector
+
+```
+
+Append a value to one of your vectors using `append()`
+
+```{r}
+# Insert code here
+sorted_vector <- append(sorted_vector, 10)
+
+
+```
+
+-   Add two numeric vectors together. Inspect the result.
+-   Multiply two numeric vectors together. Inspect the results
+
+```{r}
+# Insert code here
+w <- c(1,2)
+x <- c(2,4,6)
+
+w+x
+w*3
+
+```
+
+# 2. Data Frames
+
+In data frames each row corresponds to e.g. an individual and each column corresponds to a variable. Just as for lists, you can store different data types in data frames.
+
+## Create
+
+Create a data frame with the below objects as columns using data.frame().
+
+```{r}
+
+temp <- c(20.37, 18.56, 18.4, 21.96, 29.53, 28.16, 36.38, 36.62, 40.03, 27.59, 22.15, 19.85) 
+humidity <- c(88, 86, 81, 79, 80, 78, 71, 69, 78, 82, 85, 83) 
+rain <- c(72, 33.9, 37.5, 36.6, 31.0, 16.6, 1.2, 6.8, 36.8, 30.8, 38.5, 22.7) 
+month <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")  # write your code here 
+
+# Create a data frame with the objects 
+DF <- data.frame(temp, humidity, rain, month)
+
+
+```
+
+Rename your data frame using the "template" below (and remove `eval=FALSE`):
+
+```{r}
+#column_names <- c("temperature",  "humidity", "rain", "month") 
+
+# write your code here 
+#colnames(DF) <- column_names
+colnames(DF)[1] <- "Temperature"
+
+```
+
+## Inspect and manipulate data frame
+
+Inspect your data frame by using `nrow(), ncol(), head(), tail(), dim(), str(), names(), colnames()`
+
+For your data frame use the "`$[column_name]`" to access a column
+
+For your data frame use the "`[,i]`" to access a column
+
+Add a new column to your data frame by using the syntax: `[dataframe]$[new_column_name] <- [new_column]`
+
+```{r}
+nrow(DF)
+ncol(DF)
+dim(DF)
+class(DF)
+
+head(DF,2)
+tail(DF)
+str(DF)
+
+rownames(DF)
+
+# Insert code here 
+
+DF$humidity
+DF[,1]
+DF[,"Temperature"]
+
+DF$NiceWeather <- NA
+
+```
+
+# 3. Conditions and logic
+
+Logic and conditions is the language of programming. So of cause we should play around with these and get more familiar with them today.
+
+## Exploring logic 
+
+In the chunk below you have a vector.
+
+-   Use a logic operator to check if the element "Sine" is in the vector.
+
+-   Check if "Oliver" is in the vector.
+
+-   Check if "Sine" AND "Oliver" is in the vector.
+
+-   Check if "Sine" OR "Oliver" is in the vector.
+
+-   Check if Sine OR Oliver (but not both) is in the vector.\* This is also called Exclusive OR/XOR and is implied in most machine learning algorithms.
+
+```{r}
+educators <- c("Joachim", "Lykke", "Jano", "Sine") 
+
+"Oliver" %in% educators
+
+"Sine" %in% educators && "Oli" %in% educators 
+"Sine" %in% educators || "Oli" %in% educators 
+
+#Insert code here 
+
+```
+
+```{r}
+
+# Is Sine OR Oliver (but not both) is in the vector.* This is also called Exclusive OR/XOR and is implied in most machine learning algorithms.
+
+("Sine" %in% educators ||  "Oli" %in% educators) && !("Sine" %in% educators && "Oli" %in% educators)
+
+"Oli" %in% educators + "Sine" %in% educators == 1
+sum(c("Sine" %in% educators, "Oli" %in% educators))==1
+xor("Oli" %in% educators, "Sine" %in% educators)
+
+```
+
+## Simple conditions
+
+Conditions makes a computer program operational. Therefore, we shall of cause play around with it.
+
+-   Use the slides and write a simple condition that compares the two atomic vectors A and B. (prints "Yes" if equal, and "No" if not).
+
+-   Try to change with letters in the alphabet. What happens?
+
+```{r}
+x <- "A"
+y <- "A"
+
+if (x==y) {
+  print("Yay")
+} else {
+   print("Nay")
+}
+
+ifelse(x==y, "Yay", "Nay")
+
+
+```
+
+-   Try to make an if-else condition that tests if One is in Many and prints "Yes" if so and "No" if not.
+
+```{r}
+One <- "L"
+Many <- c("H","A", "L", "L", "O")
+
+if (One %in% Many) {
+  print("Yay")
+} else {
+   print("Nay")
+}
+
+ifelse(One %in% Many, "Yay", "Nay")
+```
+
+-   Try to make a statements in which you both test if the length of `Many` is above 1 and if `One` is contained in `Many`. Use (&&) or (\|\|).
+
+```{r}
+# Insert code here
+length(Many) > 1 && One %in% Many
+
+```
+
+## Subsetting data.frame
+
+You can subset (you will learn another function for this later) where letter has to be `"B"`
+
+```{r}
+# Creating a dataframe called D 
+letters <- sample(LETTERS[1:3], 10, replace = TRUE)   
+D <- data.frame(1, 1:10, letters)       
+
+# Create subset ND where letter has to be "B"
+ND <- D[D$letters == "B", ] 
+
+NND <- D[D$letters == "B" & D$X1.10 >=5, ] 
+# Only use one & if you compare many values (vectors of logic-values)
+
+```
+
+Now try to subset again, from `D`, where `letter` has to be `"B"` and `X1.10` has to be *more than or equal* `5`.
+
+## Exploring conditions - If you are happy  
+
+Here is a simple code that test if you are happy and then prints "clap your hands" if so.
+
+Now try to:
+
+-   Change the value to other values such as FALSE, 2, 0, -1 and "yes". What happens?
+
+```{r}
+happy <- FALSE 
+angry <- TRUE
+
+if(happy) {   
+  "clap your hands" 
+  } else{if(angry){
+    "Have a coffee"
+  }
+}
+
+```
+
+-   Expand with an `else{}`-statement in which you write something suitable such as "Have a hug", or similar.
+
+-   Expand with one or more `else{if{}}` and mood-statements. e.g. if your are angry you would stamp your feet?
+
+-   Make two conditions connected with and (&&) or or (\|\|). E.g. "you_know_it" should be variable with a boolean value. \*
+
+```{r}
+happy <- F
+angry <- T  
+you_know_it <- F
+
+if(happy && you_know_it) {   
+  "clap your hands" 
+  } else{if(angry){
+    "Have a coffee"
+  }else{
+    "Have a walk"
+  }
+}
+
+
+```
+
+## `if()` and `ifelse() *`
+
+What's the difference between `if(){}` and `ifelse()`? Carefully read the help and construct one examples that illustrate the key differences.
+
+```{r}
+# Write here
+happy <- FALSE
+
+if(happy) {   
+  "clap your hands" 
+} 
+  
+ifelse(happy, "clap your hands", "Mep")
+
+```
+
+# 4. Extra exercises
+
+## `case_when()`
+
+The code below demonstrates case_when, an effective alternative to chaining multiple if_else() statements. Note that case_when() is part of the package dplyr a central package in tidyverse. As I am only using this single tidyverse function in the script, I have chosen not to load the whole library into memory, but to just call in the individual function as `[package_name]::[function_name]`
+
+```{r}
+#| message: false
+library(tidyverse)
+
+# First lets create a fresh version of our weather data
+df <- data.frame(temp, humidity, rain, month)
+
+df$hot_wet <- case_when(
+  df$temp > mean(df$temp) ~ "Hot", 
+  df$rain > mean(df$rain) ~ "Wet",
+  TRUE ~ "Neither hot nor wet" # TRUE functions as a catch-all
+)
+
+# produces the same output as:
+
+df$hot_wet2 <- ifelse(df$temp > mean(df$temp),
+       "Hot",
+       ifelse(df$rain > mean(df$rain),
+              "Wet",
+              "Neither hot nor wet"))
+```
+
+BUT! the above output has a deficiency!
+
+-   I would like the output to say: "Both hot and wet", when both the temperature and the rainfall are higher than their yearly mean.
+
+-   Then I would like to add it to the data.frame (called df) as a new column
+
+Try to accomplish this in the chunk below. Feel free to steal code from the chunk above to get you started. You will need to use elements of everything you learned today to accomplish this goal.
+
+```{r}
+
+df$hot_wet3 <- 
+  ifelse(df$temp > mean(df$temp) &df$rain > mean(df$rain), "Both hot and wet",
+  ifelse(df$temp > mean(df$temp) ,
+       "Hot",
+       ifelse(df$rain > mean(df$rain),
+              "Wet",
+              "Neither hot nor wet")))
+
+
+
+df$hot_wet4 <- case_when(
+  df$temp > mean(df$temp) & df$rain > mean(df$rain) ~ "Both hot and wet", 
+  df$temp > mean(df$temp) ~ "Hot", 
+  df$rain > mean(df$rain) ~ "Wet",
+  TRUE ~ "Neither hot nor wet" # TRUE functions as a catch-all
+)
+```

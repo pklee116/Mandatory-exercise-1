@@ -1,0 +1,165 @@
+---
+title: 'Exercise 2: Data types, structures and conditions'
+author: "Sine Zambach"
+format:  html
+editor: visual
+editor_options: 
+  chunk_output_type: inline
+---
+
+## 
+
+## 1. Opening
+
+You should start by opening the Qmd-file in RStudio and read in different packages.
+
+Push the green arrow in the chink or run it line by line (Ctrl+Enter)
+
+```{r init}
+#| message: false
+
+library(tidyverse)
+library(lubridate)
+library(readxl)
+X <- "x"
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+### Remove messages
+
+You can modify your code block easily. Try it out:
+
+-   You can remove all the messages in the top by writing `#| message: FALSE` in the code block
+
+-   You can remove warnings using ``` #|``warning: FALSE ```
+
+-   You can hide the code block by writing `#| echo: FALSE` in the code block
+
+-   You can include error messages using `#| error: TRUE` (they are FALSE by default as the render process stops if there is an error message.
+
+-   You can exclude everything using `#| include: FALSE`
+
+-   You can stop the code from being executed by using `#| eval: FALSE`
+
+-   You can ensure that the results is included in future renders (ie if the code takes a long time to run) using `#| cache: TRUE`
+
+Try it out on this first. You can check the rendered output.
+
+## 2. Variables - make your first code
+
+Try to create a variable. Assign the number 4. Update the variable with a mathematical operator such that results ends being 8.
+
+```{r}
+
+# here, assign 4 to a variable. 
+x <- 4
+
+# here, use a math operator (*+-/) such that the results will be 8 
+
+x*2
+```
+
+### Running code - and do your first debug
+
+Be sure you have evaluated (run) the very first code chunk in this document called `init`.
+
+If you want to run the code below as you are rendering, remove the chunk option `#|eval=FALSE` from the chunk below.
+
+```{r}
+
+
+# I wrote this code for you
+x <- "R-code"
+
+x
+
+```
+
+You can even include the content of `X` in your document text by using `` `r ` ``. around the code part to get the content of X: `` `r x` ``
+
+But why does it not work? it should spit out "R-code"?
+
+## 3. You should read in two files
+
+The data for this exercise is in the file \`who_disease.csv\` in Canvas. You should download it to your own course folder before reading it into R. It is easiest, if you have it in the same folder as the r-code
+
+-   Start by importing this data set using the RStudio data import widget. You can either do this via the **Import Dataset** button that you find in the Environment pane, or from the file menu.
+
+Either way, this file is a CSV file (text).
+
+-   Before importing the data, check if the columns-types are meaningful.
+
+-   Copy the code before clicking on **Import**.
+
+Once you have imported your data set, it appears in your Global Environment (the Environment pane)
+
+as `who_disease`. If you click on the small table icon to the far right of the name of the data set,
+
+you get a preview of the data.
+
+-   Now paste the code that you copied before into the empty code chunk below for reading in the data. Delete the line `View(who_disease)` from the pasted code.
+
+-   Do the same for `BagsOfOranges.xlsx`. Notice, that this is an excel-file!
+
+```{r, coding}
+#| cache=TRUE
+library(readxl)
+
+who_disease <- read.csv("who_disease.csv")
+BagsOfOranges <- read_excel("BagsOfOranges.xlsx")
+
+
+## This is an empty code chunk. Fill in the loading code here
+
+str(who_disease)
+summary(who_disease)
+```
+
+### Insert code chunck and look at files
+
+-   Try to insert a code chunk here and look at one of the files from Ex 2 using the command `head(dataframe_name)`.
+
+-   You can also use `str()` and `summary()`. What do they show?
+
+You will use the files in next class.
+
+## 4. Customization of the document
+
+In this exercise, you should modify the existing chunks and chunk options to customize the results.
+
+-   Clean your Quarto document:
+
+-   Check the organization of chunks and give them names.
+
+-   Change the setting on code folding so that code is not shown by default.
+
+## 5. Resources
+
+### Cheat sheets
+
+-   [Quarto-information](https://quarto.org/docs/authoring/markdown-basics.html)
+
+-   [Data Import Cheat Sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_data-import.pdf),
+
+-   [Data Transformation Cheat Sheet](https://nyu-cdsc.github.io/learningr/assets/data-transformation.pdf)
+
+-   [Data Visualization Cheat Sheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf)
+
+may be helpful.
+
+### Tutorials and interactive resources
+
+If you have more time, try out:
+
+-   The `swirl` package. See also the script `Rtutorial_swirl.r`. Swirl is a tutorial build into the R-interface.
+
+-   [DataCamp](https://www.datacamp.com/) has some nice tutorials your can try out. I am trying to get you a student license for the course.

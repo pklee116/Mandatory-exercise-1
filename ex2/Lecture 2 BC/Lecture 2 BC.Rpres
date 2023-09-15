@@ -1,0 +1,447 @@
+Lecture 2 Basic concepts
+========================================================
+author: Sine Zambach
+date: 2022
+autosize: true
+
+Recap
+========================================================
+
+- A bit of motivation for why we should program
+- Assignment `x <- 3`
+- Math operators (`+,-,/,*,^`)
+- Logic operator (==, !=, >=, <=)
+- Reading in files (in video + exercises)
+
+
+We have different data types
+========================================================
+incremental: true
+
+```{r}
+class(TRUE) # Same as class(T) or class(true) but NOT class(True)
+class("Hello World")
+class(1.5)
+class(2021L)
+
+```
+
+
+Data types manipulation (try it yourself)
+========================================================
+incremental: true
+
+You can also force data into other data types.
+```{r}
+as.character(1.5)
+as.factor(TRUE)
+```
+but you cannot make a characters numeric
+```{r}
+as.numeric("Hello World") 
+```
+
+Today
+========================================================
+- Objects/variables and Data Structures 
+- Logic operators and conditions
+- Using functions
+- Debugging
+- Slido-evaluation (2 min)
+
+
+One level up: Data structure 
+========================================================
+- How your data is stored
+- How you can retrieve data
+
+Examples
+- *Atomic vectors*
+- *Vectors*
+- *Data.frames*
+- Lists
+- Matrices
+
+
+Vectors
+=======================================================
+incremental: true
+Recall we looked at assigning 3 to x. This is an *atomic vector*. It is also a *variable* or an *object*
+
+```{r}
+A <- 3
+```
+
+We could also assign more values at a time. This creates a *vector* using the important function **`c() `**:
+```{r}
+C <- c(2,4,6,8) # Notice it is a small c!
+C
+```
+
+You can get a value out of a vector using index-brackets
+```{r}
+C[3] # what value?
+```
+
+Vector and data types
+=======================================================
+incremental: true
+
+You cannot mix data types in one vector
+```{r}
+K <- c(2,4,6,"hello")
+K
+class(K) # What class will this be?
+as.numeric(K)
+```
+
+Manipulating vectors
+=======================================================
+incremental: true
+
+1. You can change a value in a vector also using the brackets
+```{r}
+C[3] <- 100
+C         # What is now the vector?
+
+```
+
+2. You can add an extra element
+```{r}
+C <- append(C, 10, after = 1)
+C
+```
+
+3. you can remove an element
+```{r}
+C <-C[-5]
+C
+```
+
+Data.frame data structure
+=======================================================
+
+- Maybe the most advanced data type you need to learn
+- Tabular format - similar to Excel-sheets
+- Only one data type per column! Each column is a variable or a vector
+
+<!-- *** -->
+![join.](Tab_R.png) 
+
+
+Example of data.frame() - creating a data frame
+=======================================================
+When you read an Excel-sheet in - it ends in a data frame. You can also create one:
+```{r reading_data}
+letters <- sample(LETTERS[1:3], 10, replace = TRUE) # Sampling random data
+D <- data.frame(1, 1:10, letters)
+D
+
+```
+
+Getting data out of data.frames
+======================================================
+incremental: true
+
+There are different way you can access rows, columns and single cells:
+
+```{r}
+D[,1] # Like the A-column in Excel
+D$X1
+D[1,] # Like first row in Excel
+D[1,3] # Like C1 in Excel. Now, extract 5th element in X1.10 ("5")
+D[5, 2]
+```
+
+
+Manipulation of data.frames
+======================================================
+incremental: true
+
+You can add a new value
+```{r}
+D[1,3] <- "M"
+D[1,]
+
+```
+
+You can subset (you will learn an easier function for this later)
+```{r}
+ND <- D[D$letters == "C", ] # New DF with only C in "letter"
+ND
+mean(ND[, 2])
+mean(D[, 2])
+A <- append(D, 1, sample(1:10, 1, replace = TRUE), sample(LETTERS[1:3], 1, replace = TRUE), after = 10)
+```
+
+
+
+
+Other data structures you will meet: List and Matrix
+=======================================================
+incremental: true
+
+If you have a list of different data types you can use **`list()`**:
+```{r}
+L <- list(2,4,"hello",TRUE)
+```
+
+
+Matrix - when you have only one data type in your table
+```{r}
+M <- matrix(c(1,2,3,4,5,6),ncol=2, nrow=3)
+M
+```
+
+
+Operators 
+=======================================================
+
+**Math operators returns a number**
+
+| Operator | Meaning |
+|------|:-----|
+|    +  |  Addition  |
+|   \- |  Subtraction  |
+|   /  |  Division  |
+|   \*  |  Multiplication  |
+|    ^   |  Exponentiation  |
+
+
+***
+
+**Logic operators returns TRUE/FALSE/NA**
+
+| Operator | Meaning |
+|-----|:-----|
+|   ==  |  Equal|
+|   !=  |  	NOT equal|
+|   <= |  Less than or equal|
+|  >= | Greater than or equal|
+|||
+|   a &vert;&vert; b  |  either a OR b|
+|   a && b  |  both a AND b|
+|   !a  |  NOT a|
+|  %in%  | Equal to one of elements|
+
+
+Logic operators are often used to test for TRUE/FALSE
+=======================================================
+incremental: true
+Here are some examples of usages
+
+```{r}
+x <- 3
+y <- 6
+
+x!=y        # NOT Equals
+x==y || x<=y # OR
+x==y && x<=y # AND
+
+
+```
+
+Logic operators are often used in *Conditions*...
+
+Conditions
+=======================================================
+- What makes a computer program operational and more than a "calculator" or markup language like HTML
+- Comes in different flavors of `if`, `then` and `else`
+- An `if`-statement allows you to conditionally execute code. 
+
+It has a structure like this:
+
+```{r, echo=FALSE}
+condition <- TRUE
+```
+
+
+```{r, results="hide"}
+if (condition) {
+  # code executed when condition is TRUE
+} else {
+  # code executed when condition is FALSE
+}
+```
+
+Let us put conditions and logical operators together!
+
+Conditions using our logical operators
+=======================================================
+incremental: true
+
+Simple statement (recall `x is 3` and ` y is 6`)
+```{r}
+if (x==y) {
+  print("Yay")
+} else {
+   print("Nay")
+}
+```
+
+Can, btw also be written:
+```{r}
+ifelse(x!=
+         y, "Yay", "Nay")
+```
+
+Try to change to one "=". Ant to "not equal"
+
+***
+
+Using a more complex operator to compare of comparisons
+```{r}
+if (x<y && !(x %in% y)){
+  print("This is true")
+} else{
+  print("Not so true")
+}
+```
+
+
+Nested conditions
+=======================================================
+
+In nested conditions, we have a hierarchy of statements we test, and it has the structure:
+```{r, echo=FALSE}
+this=T
+that=T
+yes=T
+no=F
+condition=T
+```
+
+
+```{r, results="hide"}
+if (this) {
+  # do something
+} else {
+  if (that) {
+    # do something else
+  } else {
+    # now do something completely different
+  }
+}
+```
+
+Let us look at it
+
+Nested conditions - example
+=======================================================
+incremental: true
+ 
+Recall, `x` is 3 and `y` is 9
+```{r}
+if (x==y) {
+  print("x is equal to y")
+} else {
+  if (x > y) {
+    print("x is larger than y")
+  } else {
+    print("y is larger than x")
+  }
+}
+```
+
+Nested conditions - the short version
+=======================================================
+
+
+We can also use our `ifelse()`-function
+
+```{r}
+ifelse(x==y, "x is equal to y", 
+       ifelse(x > y,"x is larger than y", "y is larger than x" ))
+```
+
+
+Using functions - in one slide
+===================================================
+We have now tried different functions. Next time we will learn more...
+
+You use them like:
+
+`function(Arg1, Arg2, Arg3...)`
+
+
+```{r}
+x <- c(1,2,4)
+
+mean(x)
+
+x <- c(1,2,4, NA)
+mean(x, na.rm = TRUE)
+
+```
+
+Try to look a function up. Is could be  ` mean()`. Or `sample()`
+
+
+
+Debugging
+====================================================
+incremental: true
+
+Video on advanced debugging in R on Canvas
+
+But here is a need to know:
+- Look at error message
+- print, print, print
+- Look for cheat sheets
+- Search on your error - you will end on "Stack-overflow"
+- Use Help (in lower right pane)
+- Use ChatGPT (if code is not confidential)
+
+***
+![join.](debugimage.jpg) 
+
+Restart R-session:
+
+Ctrl + Shift + F10
+
+
+Example 1 - look at error message:
+====================================================
+
+```{r, eval=FALSE}
+
+x <- 123
+X
+
+```
+
+Will not run, so I have added `, eval=FALSE` in the chunk-header. 
+
+Demo...
+
+
+
+Example 2 - print and investigate
+====================================================
+incremental: true
+
+```{r}
+
+x <- c(9,2.4)
+x[1]
+length(x)
+x[2]
+
+```
+
+
+
+Example 3 - google
+====================================================
+incremental: true
+
+Sometimes it is pretty much nonsense:
+
+`> library(tidyverse) `
+
+`Warning: package ‘tidyverse’ was built under R version 4.1.3Error: package or namespace load failed for ‘tidyverse’ in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
+ namespace ‘cli’ 3.2.0 is already loaded, but >= 3.3.0 is required`
+
+Someone had a similar problem before. Notice it is the cli-package in your problem and scales in the stack overflow site.
+
+<https://community.rstudio.com/t/problems-with-tidyverse-load-error-package-or-namespace-load-failed-for-tidyverse-in-loadnamespace-i-c-lib-loc-libpaths-versioncheck-vi-i-namespace-scales-0-4-0-is-already-loaded-but-0-4-1-is-required/3414>

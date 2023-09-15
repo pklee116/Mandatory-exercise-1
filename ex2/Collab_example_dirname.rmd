@@ -1,0 +1,30 @@
+---
+title: 'File on collaborations'
+author: "Sine Zambach"
+date: "September 22, 2021"
+output: 
+  html_document:
+    theme: sandstone
+---
+
+# Collaborative Project
+
+```{r init}
+library(readxl)
+
+# Setting file path to where the code is located
+file_path <- paste0(dirname(rstudioapi::getSourceEditorContext()$path), "/")
+
+
+```
+
+```{r readingFiles}
+
+# Remember to change the path to your own file folder! 
+# e.g. by FILE - NEW PROJECT/OPEN PROJECT
+BagsOfApples <- read.csv(paste0(file_path,"Data/BagsOfApples.csv"), sep=";")
+BagsOfOranges <- read_excel(paste0(file_path,"Data/BagsOfOranges.xlsx"))
+
+head(BagsOfOranges)
+
+```
